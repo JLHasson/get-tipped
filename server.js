@@ -7,14 +7,14 @@ var bodyParser = require("body-parser");
 var Bear = require("./app/models/bear");
 
 var mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:27017/data');
+mongoose.connect('mongodb://localhost/data');
 
 
 //Configure bodyParser, lets us get data from POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || process.env.IP; //set the port
+var port = process.env.PORT || 8080; //set the port
 
 //Routes for API
 var router = express.Router();
@@ -30,21 +30,29 @@ router.get('/', function(req, res) {
 });
 
 
-//POST route for /api/bears
+// POST route for /api/bears
 router.route('/bears')
-  .post(function(req, res) {
+   .post(function(req, res) {
 
-    var bear = new Bear();
-    bear.name = req.body.name;
+       var bear = new Bear();
+       bear.name = req.body.name;
 
-    bear.save(function(err) {
-      if (err)
-        res.send(err);
+       bear.save(function(err) {
+           if (err)
+               res.send(err);
 
-      res.json({ message: 'Bear Created!'});
+           res.json({ message: 'Bear Created!'});
+       })
+   })
 
+   .get(function(req, res) {
+        Bear.find(function(err, bears) {
+            if (err)
+                res.send(err);
+
+            res.json(bears);
+        })
     });
-  });
 
 app.use('/api', router);
 
