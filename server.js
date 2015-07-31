@@ -1,84 +1,54 @@
-//
-// # SimpleServer
-//
-// A simple chat server using Socket.IO, Express, and Async.
-//
-var http = require('http');
-var path = require('path');
+// server.js
 
-var async = require('async');
-var socketio = require('socket.io');
-var express = require('express');
+var express = require("express");
+var app = express();
+var bodyParser = require("body-parser");
 
-//
-// ## SimpleServer `SimpleServer(obj)`
-//
-// Creates a new instance of SimpleServer with the following options:
-//  * `port` - The HTTP port to listen on. If `process.env.PORT` is set, _it overrides this value_.
-//
-var router = express();
-var server = http.createServer(router);
-var io = socketio.listen(server);
+var Bear = require("./app/models/bear");
 
-router.use(express.static(path.resolve(__dirname, 'client')));
-var messages = [];
-var sockets = [];
+var mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost:27017/data');
 
-io.on('connection', function (socket) {
-    messages.forEach(function (data) {
-      socket.emit('message', data);
-    });
 
-    sockets.push(socket);
+//Configure bodyParser, lets us get data from POST
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-    socket.on('disconnect', function () {
-      sockets.splice(sockets.indexOf(socket), 1);
-      updateRoster();
-    });
+var port = process.env.PORT || process.env.IP; //set the port
 
-    socket.on('message', function (msg) {
-      var text = String(msg || '');
+//Routes for API
+var router = express.Router();
 
-      if (!text)
-        return;
-
-      socket.get('name', function (err, name) {
-        var data = {
-          name: name,
-          text: text
-        };
-
-        broadcast('message', data);
-        messages.push(data);
-      });
-    });
-
-    socket.on('identify', function (name) {
-      socket.set('name', String(name || 'Anonymous'), function (err) {
-        updateRoster();
-      });
-    });
-  });
-
-function updateRoster() {
-  async.map(
-    sockets,
-    function (socket, callback) {
-      socket.get('name', callback);
-    },
-    function (err, names) {
-      broadcast('roster', names);
-    }
-  );
-}
-
-function broadcast(event, data) {
-  sockets.forEach(function (socket) {
-    socket.emit(event, data);
-  });
-}
-
-server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
-  var addr = server.address();
-  console.log("Chat server listening at", addr.address + ":" + addr.port);
+//Happens everytime we get a request
+router.use(function(req, res, next) {
+  console.log("Words");
+  next();
 });
+
+router.get('/', function(req, res) {
+  res.json({ message: 'Horray! Welcome to our API!'});
+});
+
+
+//POST route for /api/bears
+router.route('/bears')
+  .post(function(req, res) {
+
+    var bear = new Bear();
+    bear.name = req.body.name;
+
+    bear.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({ message: 'Bear Created!'});
+
+    });
+  });
+
+app.use('/api', router);
+
+
+//Actually start the server listening on the port (8080)
+app.listen(port);
+console.log('Magic happens on port ' + port);
