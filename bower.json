@@ -1,0 +1,15 @@
+{
+    "name": "Get-Tipped",
+    "version": "0.0.0",
+    "description": "A tipping application",
+    "main": "server.js",
+    "repository": "https://github.com/jlhasson/get-tipped",
+    "author": "Lance Hasson <lance.hasson@gmail.com>",
+    "dependencies": {
+        "bootstrap": "latest",
+        "font-awesome": "latest",
+        "animate.css": "latest",
+        "angular": "latest",
+        "angular-route": "latest"
+    }
+}
