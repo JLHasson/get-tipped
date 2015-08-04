@@ -30,7 +30,6 @@ app.use(express.static(__dirname + '/public'));
 // routes
 require('./app/routes')(app); //configure routes
 
-
 //Actually start the server listening on the port (8080)
 app.listen(port);
 console.log('Magic happens on port ' + port);

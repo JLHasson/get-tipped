@@ -12,6 +12,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
         .when('/nerds', {
             templateUrl: 'views/nerd.html',
             controller: 'NerdController'
+        })
+
+        .when('/todo', {
+            templateUrl: 'views/todo.html',
+            controller: 'TodoController'
         });
 
     $locationProvider.html5Mode(true);
