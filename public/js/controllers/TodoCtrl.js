@@ -1,36 +1,28 @@
-angular.module('TodoCtrl', []).controller('TodoController', function($scope, $http) {
+angular.module('TodoCtrl', []).controller('TodoController', function($scope, Todo) {
 
     $scope.formData = {};
 
-    $http.get('/api/todos')
+    Todo.get()
         .success(function(data) {
             $scope.todos = data;
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
         });
 
     $scope.createTodo = function() {
-        $http.post('/api/todos', $scope.formData)
-            .success(function(data) {
-                $scope.formData = {};
-                $scope.todos = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
+        if (!$.isEmptyObject($scope.formData)) {
 
+            Todo.create($scope.formData)
+                .success(function(data) {
+                    $scope.formData = {};
+                    $scope.todos = data;
+                });
+
+        }
+    };
+        // delete a todo after checking it
     $scope.deleteTodo = function(id) {
-        $http.delete('/api/todos/' + id)
+        Todo.delete(id)
             .success(function(data) {
                 $scope.todos = data;
-                console.log(data);
-            })
-            .error(function(data) {
-                console.log(data);
             });
     };
-
 });
