@@ -1,5 +1,5 @@
 angular.module('appRoutes', [])
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    .config(['$routeProvider', '$locationProvider', '$authProvider', function($routeProvider, $locationProvider, $authProvider) {
 
         $routeProvider
 
@@ -9,16 +9,31 @@ angular.module('appRoutes', [])
                 controller: 'MainController'
             })
 
-            // nerds page that will use the NerdController
-            .when('/nerds', {
-                templateUrl: 'views/nerd.html',
-                controller: 'NerdController'
-            })
-
             .when('/todo', {
                 templateUrl: 'views/todo.html',
                 controller: 'TodoController'
-            });
+            })
+
+            .when('/login', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginController'
+            })
+
+            .when('/signup', {
+                templateUrl: 'views/signup.html',
+                controller: 'SignupController'
+            })
+
+            .when('/profile', {
+                templateUrl: 'views/profile.html',
+                controller: 'ProfileController'
+            })
+
+            .otherwise('/');
+
+            $authProvider.loginURL = 'http://localhost:8080/auth/login';
+            $authProvider.signupURL = 'http://localhost:8080/auth/signup';
+
 
         $locationProvider.html5Mode(true);
 

@@ -1,0 +1,24 @@
+<div class="container">
+
+    <div ng-if="isAuthenticated()">
+        <div class="picture">
+            <img src="" alt="" class="profilePic">
+        </div>
+        <div class="info">
+            <p>Info stuff<p>
+        </div>
+    </div>
+
+    <div ng-if="!isAuthenticated()">
+        <div class="jumbotron">
+
+            <p>This is where you profile page would be. Please login to continue! Powered by <strong>Satellizer</strong>.</p>
+            <p>
+                <a href="/login">Login!</a>
+                <a href="/signup">Sign Up!</a>
+            </p>
+
+        </div>
+    </div>
+
+</div>

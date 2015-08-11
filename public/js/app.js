@@ -1,1 +1,8 @@
-var app = angular.module('main', ['ngRoute', 'appRoutes', 'MainCtrl', 'NerdCtrl', 'TodoCtrl', 'NerdService', 'TodoService']);
+var app = angular.module('main', ['ngRoute',
+                                  'ngMessages',
+                                  'satellizer',
+                                  'appRoutes',
+                                  'MainCtrl',
+                                  'TodoCtrl',
+                                  'ProfileCtrl',
+                                  'TodoService']);

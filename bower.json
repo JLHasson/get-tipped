@@ -10,6 +10,8 @@
         "font-awesome": "latest",
         "animate.css": "latest",
         "angular": "latest",
-        "angular-route": "latest"
+        "angular-route": "latest",
+        "angular-messages": "latest",
+        "satellizer": "latest"
     }
 }
