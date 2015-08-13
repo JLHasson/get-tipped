@@ -34,7 +34,22 @@ angular.module('appRoutes', [])
             $authProvider.loginURL = 'http://localhost:8080/auth/login';
             $authProvider.signupURL = 'http://localhost:8080/auth/signup';
 
+            $authProvider.facebook({
+                clientId: token.facebook
+            });
 
+            $authProvider.google({
+                clientId: token.google
+            });
+            //
+            // $authProvider.github({
+            //     clientId: token.github;
+            // });
+            //
+            // $authProvider.twitter({
+            //     clientId: token.twitter;
+            // });
+            //
         $locationProvider.html5Mode(true);
 
 }]);

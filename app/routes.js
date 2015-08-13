@@ -56,7 +56,7 @@ module.exports = function(app) {
 
     app.get('/login', function(req, res) {
 
-        res.sendfile('login.html', { message: req.flash('loginMessage') });
+        res.sendfile('./public/views/login.html');
 
     });
 
@@ -64,7 +64,7 @@ module.exports = function(app) {
 
     app.get('/signup', function(req, res) {
 
-        res.sendfile('signup.html', { message: req.flash('signupMessage') });
+        res.sendfile('./public/views/signup.html');
 
     });
 
@@ -74,7 +74,7 @@ module.exports = function(app) {
 
     app.get('/profile', isLoggedIn, function(req, res) {
 
-        res.sendfile('profile.html', {
+        res.sendfile('./public/views/profile.html', {
             user : req.user
         });
 

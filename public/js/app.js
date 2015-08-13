@@ -5,4 +5,6 @@ var app = angular.module('main', ['ngRoute',
                                   'MainCtrl',
                                   'TodoCtrl',
                                   'ProfileCtrl',
+                                  'LoginCtrl',
+                                  'SignupCtrl',
                                   'TodoService']);
